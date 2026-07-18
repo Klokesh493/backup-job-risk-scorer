@@ -1,0 +1,3 @@
+job,tier,hours_since_success,failures_24h,encrypted
+crm-db,critical,30,2,yes
+wiki,standard,2,0,yes
