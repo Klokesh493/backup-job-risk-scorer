@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Demo 1",
+    "args": [
+      "backup_risk.py",
+      "sample_backups.csv"
+    ],
+    "expected": "examples/Demo 1.stdout.txt"
+  },
+  {
+    "name": "Last sample record in isolation",
+    "args": [
+      "backup_risk.py",
+      "examples/last-record.csv"
+    ],
+    "expected": "examples/Last sample record in isolation.stdout.txt"
+  }
+]

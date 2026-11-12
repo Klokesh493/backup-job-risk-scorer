@@ -1,0 +1,2 @@
+job,tier,hours_since_success,failures_24h,encrypted
+wiki,standard,2,0,yes
