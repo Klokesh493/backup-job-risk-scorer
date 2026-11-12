@@ -1,32 +1,12 @@
 # Backup Job Risk Scorer
 
-Scores backup jobs by age, failure count, encryption status, and protected workload tier.
-
-Focus: Backup-platform DevSecOps reliability.
-
-Built as a small, runnable Python project with clear input, output, sample data, and tests.
-
-## Run
-
-```bash
-python3 backup_risk.py sample_backups.csv
-```
-
-## Verify
-
-```bash
-python3 -m unittest discover . -v
-```
-
-## Local verification
-
-Run `make verify` with Make and Python 3 installed. The target runs the documented sample through the project CLI. It also runs the existing Python unit tests.
-
-## Business problem
-
 An operator reviewing multiple backup jobs needs to prioritize stale or repeatedly failed protection for critical workloads.
 
-## Project walkthrough
+## What I built
+
+I built a backup review queue that scores each job using age since last success, failures in the last 24 hours, encryption status, and workload tier. The CLI returns both the score and the low, medium, or high classification.
+
+## How it works
 
 ```mermaid
 flowchart LR
@@ -40,41 +20,43 @@ flowchart LR
     C --> E
 ```
 
-[Architecture and data flow](docs/ARCHITECTURE.md) · [Business problem, demo, and verification](docs/CASE_STUDY.md)
+[Architecture](docs/ARCHITECTURE.md) · [Decision rules and source](docs/RULES.md)
+
+## Tools used
+
+| Tool | Role in this repository |
+| --- | --- |
+| Python | [backup_risk.py](backup_risk.py) implements the CLI and decision rules. Uses `csv` to read tabular exports. |
+| Make | Runs the documented example and the local `unittest` suite. |
+| Python replay runner | Compares actual stdout with the checked-in baseline fixtures. |
+| Ruff and Bandit | Developer lint and static security checks through `make check`. |
 
 ## Run the project
 
-### Local setup
-
-Run `make verify` with Python 3 and Make installed.
-
-### CLI usage
+Use Python 3.10+ and Make. From the repository root:
 
 ```sh
 python3 backup_risk.py sample_backups.csv
 ```
 
-### Replay usage
+The CRM database scores 12 and is high risk. The wiki scores zero and is low risk. [Full expected output](examples/Demo%201.stdout.txt)
 
-Run `make replay` to replay the checked-in inputs. The runner compares stdout with the baseline, reports differences, and exits nonzero on regression.
+### Additional replay cases
 
-[Replay cases](examples/replay-manifest.json) · [Generated report](reports/replay.md) · [Rule implementation](docs/RULES.md)
+- **Last sample record in isolation** · `python3 backup_risk.py examples/last-record.csv` · [Expected output](examples/Last%20sample%20record%20in%20isolation.stdout.txt)
 
-### Run tests
+## Verify the project
 
-[Verification report](reports/verification.md) · [Business problem, sample behavior, and limitations](docs/CASE_STUDY.md)
+```sh
+make verify
+make replay
+```
 
+`make replay` checks the recorded cases and exits nonzero if the output changes.
+See the [developer guide](docs/DEVELOPMENT.md) for the pinned lint and security tools.
 
-### Limitations
+## Operating limits
 
-The verification report covers the bundled local examples. See the [case study](docs/CASE_STUDY.md) for project-specific assumptions and operating limits.
+A classification reflects the supplied export and policy weights. Verify actual recoverability with a restore drill.
 
-## Development and security
-
-See the [developer setup, tool roles, and security checks](docs/DEVELOPMENT.md).
-
-[Local check results](reports/devsecops.md)
-
-## Runbook
-
-[Run, verify, and troubleshoot this project](docs/RUNBOOK.md)
+[Case study](docs/CASE_STUDY.md) · [Operator runbook](docs/RUNBOOK.md) · [Verification report](reports/verification.md)
