@@ -4,11 +4,14 @@ Scores backup jobs by age, failure count, encryption status, and protected workl
 
 ```mermaid
 flowchart LR
-    N0["sample_backups.csv"]
-    N1["backup_risk.py"]
-    N2["risk score / classify"]
-    N3["Result for operator review"]
-    N0 --> N1 --> N2 --> N3
+    A["Backup job records"]
+    B["Score age, failures, encryption, and tier"]
+    C["Compare score to thresholds"]
+    D["High or medium risk"]
+    E["Low risk"]
+    A --> B --> C
+    C --> D
+    C --> E
 ```
 
 ## Operational boundaries
