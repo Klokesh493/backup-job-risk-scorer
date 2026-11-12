@@ -22,6 +22,10 @@ python3 -m unittest discover . -v
 
 Run `make verify` with Make and Python 3 installed. The target runs the documented sample through the project CLI. It also runs the existing Python unit tests.
 
+## Business problem
+
+An operator reviewing multiple backup jobs needs to prioritize stale or repeatedly failed protection for critical workloads.
+
 ## Project walkthrough
 
 ```mermaid

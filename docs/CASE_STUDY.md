@@ -2,7 +2,7 @@
 
 ## Business problem
 
-Scores backup jobs by age, failure count, encryption status, and protected workload tier.
+An operator reviewing multiple backup jobs needs to prioritize stale or repeatedly failed protection for critical workloads.
 
 ## Reproduce the workflow
 
