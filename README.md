@@ -2,6 +2,8 @@
 
 An operator reviewing multiple backup jobs needs to prioritize stale or repeatedly failed protection for critical workloads.
 
+[Skills and verification](docs/ENGINEERING_NOTES.md)
+
 ## What I built
 
 I built a backup review queue that scores each job using age since last success, failures in the last 24 hours, encryption status, and workload tier. The CLI returns both the score and the low, medium, or high classification.
